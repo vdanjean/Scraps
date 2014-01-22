@@ -8,12 +8,16 @@
  * CLOCK_THREAD_CPUTIME_ID
  */
 
+#ifndef MYCLOCK
 /* #define CLOCK CLOCK_REALTIME */
 /* #define CLOCK CLOCK_REALTIME_COARSE */
 /* #define CLOCK CLOCK_MONOTONIC */
 #define CLOCK CLOCK_MONOTONIC_COARSE
 /* #define CLOCK CLOCK_PROCESS_CPUTIME_ID */
 /* #define CLOCK CLOCK_THREAD_CPUTIME_ID */
+#else
+#  define CLOCK MYCLOCK
+#endif
 
 int main(void)
 {

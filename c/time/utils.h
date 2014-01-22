@@ -36,6 +36,6 @@ void test_end(void)
 	unsigned long long t_end, t_per;
 	t_end = gettime();
 	t_per = (t_end - t_start) / N;
-	printf("time per call: %lluns\n", t_per);
+	printf("   time per call: %lluns\n", t_per);
 }
 
