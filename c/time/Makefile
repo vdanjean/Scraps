@@ -1,13 +1,17 @@
 CLOCKS=REALTIME REALTIME_COARSE MONOTONIC MONOTONIC_RAW MONOTONIC_COARSE PROCESS_CPUTIME_ID THREAD_CPUTIME_ID
+CC=gcc
+C_OPTS=-O2
+LIBS=-lrt -lpthread
+
 all: $(addprefix clock_gettime_,$(CLOCKS))
-	gcc -O2 time.c -o time -lrt
-	gcc -O2 ftime.c -o ftime -lrt
-	gcc -O2 gettimeofday.c -o gettimeofday -lrt
-	gcc -O2 clock_gettime.c -o clock_gettime -lrt
-	gcc -O2 cached_time.c -o cached_time -lrt -lpthread
+	$(CC) $(C_OPTS) $(LIBS) time.c -o time
+	$(CC) $(C_OPTS) $(LIBS) ftime.c -o ftime
+	$(CC) $(C_OPTS) $(LIBS) gettimeofday.c -o gettimeofday
+	$(CC) $(C_OPTS) $(LIBS) clock_gettime.c -o clock_gettime
+	$(CC) $(C_OPTS) $(LIBS) cached_time.c -o cached_time
 
 clock_gettime_%: clock_gettime.c
-	gcc -O2 $< -o $@ -lrt -DMYCLOCK=CLOCK_$*
+	$(CC) $(C_OPTS) $(LIBS)  $< -o $@ -DMYCLOCK=CLOCK_$*
 
 run:
 	./time
@@ -18,8 +22,9 @@ run:
 	./cached_time
 
 clean:
+	rm -f *.o
 	rm -f time
-	rm -f ftime
+	rm -f ftime 
 	rm -f gettimeofday
 	rm -f clock_gettime $(addprefix clock_gettime_,$(CLOCKS))
 	rm -f cached_time
